@@ -1,4 +1,5 @@
 import React, {useContext, useEffect} from "react"
+import { Product } from "./Product"
 import { ProductContext } from "./ProductProvider"
 
 export const ProductList = () => {
