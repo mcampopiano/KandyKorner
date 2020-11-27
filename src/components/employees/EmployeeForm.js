@@ -12,6 +12,7 @@ export const EmployeeForm = (props) => {
     const location = useRef(null)
     const pay = useRef(null)
     const ft = useRef(null)
+    const boss = useRef(null)
 
     useEffect(() => {
         getLocations()
@@ -21,10 +22,17 @@ export const EmployeeForm = (props) => {
         const locationId = parseInt(location.current.value)
         const payRate = parseInt(pay.current.value)
         let fullTime = ""
+        let manager = ""
         if (ft.current.value === "true") {
             fullTime = true
         } else {
             fullTime = false
+        }
+
+        if (boss.current.value === "true") {
+            manager = true
+        } else {
+            manager = false
         }
         if (locationId === 0) {
             window.alert("Please select a location")
@@ -33,7 +41,8 @@ export const EmployeeForm = (props) => {
                 name: name.current.value,
                 locationId,
                 payRate,
-                fullTime
+                fullTime,
+                manager
             })
                 .then(() => props.history.push("/employees"))
         }
@@ -65,12 +74,22 @@ export const EmployeeForm = (props) => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
+                    <label htmlFor="manager">Manager:</label>
+                    <select defaultValue="" name="manager" ref={boss} id="manager" className="form-control">
+                        <option value="0">Select whether employee is a manager</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
                     <label htmlFor="location">Assign a location</label>
                     <select defaultValue="" name="location" ref={location} id="employeeLocation" className="form-control">
                         <option value="0">Select a location</option>
                         {locations.map(event => (
                             <option key={event.id} value={event.id}>
-                                {event.address}
+                                {event.name}
                             </option>
                         ))}
                     </select>
@@ -79,7 +98,6 @@ export const EmployeeForm = (props) => {
             <button type="submit" onClick={event => {
                 event.preventDefault()
                 constructNewEmployee()
-                console.log(name.current.value)
                 props.history.push("/employees")
             }}
                 className="btn btn-primary">
