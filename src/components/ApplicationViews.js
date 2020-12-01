@@ -13,6 +13,7 @@ import { ProductTypeProvider } from "./productTypes/productTypeProvider"
 export const ApplicationViews = (props) => {
     return (
         <>
+            <Route exact path ="/" />
             <LocationProvider>
                 <Route exact path="/locations">
                     <LocationList />
