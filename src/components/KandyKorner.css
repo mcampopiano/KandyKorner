@@ -1,0 +1,6 @@
+body {
+    background-image: url(./auth/logo.png);
+    background-position: center;
+    background-size: cover;
+    color: rgb(255, 255, 255);
+}
