@@ -8,6 +8,7 @@ import { EmployeeForm } from "./employees/EmployeeForm"
 import { EmployeeList } from "./employees/EmployeeList"
 import { EmployeeProvider } from "./employees/EmployeeProvider"
 import { Home } from "./home/home"
+import { LocationDetails } from "./locations/locationDetails"
 import { LocationList } from "./locations/LocationList"
 import { LocationProvider } from "./locations/LocationProvider"
 import { ProductList } from "./product/ProductList"
@@ -28,6 +29,17 @@ export const ApplicationViews = (props) => {
                     <LocationList />
                 </Route>
             </LocationProvider>
+
+            <ProductProvider>
+                <ProductTypeProvider>
+
+                    <LocationProvider>
+                        <Route path="/locations/:locationId(\d+)" render={
+                            props => <LocationDetails {...props} />}
+                        />
+                    </LocationProvider>
+                </ProductTypeProvider>
+            </ProductProvider>
 
 
             <CustomerCandyProvider>
