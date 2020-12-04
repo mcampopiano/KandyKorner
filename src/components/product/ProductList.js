@@ -1,23 +1,33 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { ProductTypeContext } from "../productTypes/productTypeProvider"
 import { Product } from "./Product"
 import { ProductContext } from "./ProductProvider"
-import {OrderContext} from "../CustomerCandy/CustomerCandyProvider"
+import { OrderContext } from "../CustomerCandy/CustomerCandyProvider"
 
-export const ProductList = () => {
-    const { products, getProducts } = useContext(ProductContext)
+export const ProductList = (props) => {
+    const { products, getProducts, searchTerms } = useContext(ProductContext)
     const { productTypes, getProductTypes } = useContext(ProductTypeContext)
-    const {addOrder} = useContext(OrderContext)
+    const { addOrder } = useContext(OrderContext)
 
+    const [filteredProducts, setFiltered] = useState([])
     useEffect(() => {
         getProductTypes()
             .then(getProducts)
     }, [])
 
+useEffect(() => {
+    // The state of searchTerms is being updated in SearchBar.js
+    if (searchTerms !== "") {
+        const subset = products.filter(prod => prod.name.toLowerCase().includes(searchTerms.toLowerCase()))
+        setFiltered(subset)
+    } else {
+        setFiltered(products)
+    }
+}, [searchTerms, products])
     return (
         <div className="products">
             {
-                products.map(product => {
+                filteredProducts.map(product => {
                     const type = productTypes.find(type => type.id === product.productTypeId)
                     return (
                         <>
@@ -28,7 +38,7 @@ export const ProductList = () => {
                                     productId: product.id
                                 })
                             }}
-                            className="purchaseBtn">Purchase</button>
+                                className="purchaseBtn">Purchase</button>
                         </>)
                 }
                 )
