@@ -13,6 +13,7 @@ import { LocationProvider } from "./locations/LocationProvider"
 import { ProductList } from "./product/ProductList"
 import { ProductProvider } from "./product/ProductProvider"
 import { ProductTypeProvider } from "./productTypes/productTypeProvider"
+import { SearchBar } from "./searchBar/SearchBar"
 
 
 export const ApplicationViews = (props) => {
@@ -32,9 +33,14 @@ export const ApplicationViews = (props) => {
             <CustomerCandyProvider>
                 <ProductTypeProvider>
                     <ProductProvider>
-                        <Route path="/products">
-                            <ProductList />
-                        </Route>
+                        <Route path="/products" render={
+                            props => <>
+
+                                <SearchBar />
+                                <ProductList {...props} />
+                            </>
+                        }
+                        />
                     </ProductProvider>
                 </ProductTypeProvider>
             </CustomerCandyProvider>
