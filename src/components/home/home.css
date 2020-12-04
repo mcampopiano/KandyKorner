@@ -1,0 +1,6 @@
+ .background-img {
+    background-image: url(../auth/logo.png);
+    background-position: center;
+    background-size: cover;
+    height: 1000px;
+}
